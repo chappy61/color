@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#0b0f1a" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>いろえもじ</title>
+  </head>
+
+  <body>
+    <main class="app" id="appRoot">
+      <header class="top" id="top">
+        <!-- “問題は背景色”：ここ全体の背景を色にする -->
+        <div class="target-row">
+          <div class="slots wide" id="slots" aria-label="せいかいスロット">
+            <div class="slot" data-slot="0"></div>
+            <div class="slot" data-slot="1"></div>
+            <div class="slot" data-slot="2"></div>
+            <div class="slot" data-slot="3"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="board-wrap">
+        <div class="board" id="board" aria-label="えもじボード"></div>
+        <div class="rainbow-hint" id="rainbowHint" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

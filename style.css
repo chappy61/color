@@ -1,0 +1,327 @@
+/* =========================
+  いろあてじ（子ども向け）
+  - 背景は通常：単色 / 虹ステージ：グラデ
+  - スクロール無し
+  - 盤面はアイボリー
+  - 上はガラス風 + スロット + 丸つけリング
+========================= */
+
+:root {
+  --bg: #0b0f1a;
+  --panel: rgba(255, 255, 255, 0.1);
+  --line: rgba(255, 255, 255, 0.2);
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --r: 22px;
+
+  /* JSが更新する背景色 */
+  --question: #ff3b30;
+
+  /* 虹ステージ背景 */
+  --questionGradient: linear-gradient(
+    135deg,
+    #ff3b30 0%,
+    #ff9f0a 16%,
+    #ffd60a 32%,
+    #34c759 48%,
+    #0a84ff 64%,
+    #af52de 80%,
+    #ff2d55 100%
+  );
+
+  /* タイルサイズ（JSが更新） */
+  --tileSize: 72px;
+}
+
+/* ===== リセット ===== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--questionSolid);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans JP", sans-serif;
+  overflow: hidden; /* スクロール殺す */
+}
+
+/* 虹ステージ時だけ虹背景 */
+body.rainbow {
+  background: var(--questionGradient);
+}
+
+/* 長押し・選択・メニュー抑制 */
+.board,
+.emoji-btn,
+.btn,
+.slots,
+.slot {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+/* ===== レイアウト ===== */
+.app {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 12px;
+}
+
+/* ===== 上（スロットエリア） ===== */
+.top {
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(6px);
+  padding: 12px;
+}
+
+.target-row {
+  display: flex;
+  align-items: center;
+}
+
+.slots {
+  position: relative; /* リング/虹を重ねる土台 */
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.slot {
+  flex: 1;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: grid;
+  place-items: center;
+  font-size: clamp(22px, 4.2vw, 40px);
+  filter: saturate(1.05);
+}
+
+/* スロットのポン演出 */
+.slot.pop {
+  animation: pop 0.18s ease-out;
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== 丸つけリング（スロット全体） ===== */
+#slots::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+  transform: rotate(0deg);
+}
+
+#slots.ring::before {
+  opacity: 1;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.95) 18%,
+    rgba(255, 255, 255, 0) 36%,
+    rgba(255, 255, 255, 0.85) 52%,
+    rgba(255, 255, 255, 0) 72%,
+    rgba(255, 255, 255, 0.95) 88%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mask: radial-gradient(circle, transparent 62%, #000 64%);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
+  animation: ringSpin 0.55s ease-out forwards;
+}
+
+@keyframes ringSpin {
+  0% {
+    transform: rotate(0deg) scale(0.96);
+    filter: blur(1px);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(380deg) scale(1.03);
+    filter: blur(0px);
+    opacity: 0;
+  }
+}
+
+/* ===== 虹ステージ：上の丸は消して、半透明🌈を重ねる ===== */
+body.rainbow #slots .slot {
+  opacity: 0; /* 4つの丸を見せない */
+}
+
+body.rainbow #slots::after {
+  content: "🌈";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: min(18vw, 120px);
+  opacity: 0.22;
+  pointer-events: none;
+  transform: translateY(2px);
+  filter: saturate(1.2);
+}
+/* 虹ステージの🌈をキラッとさせる用 */
+body.rainbow #slots.sparkle::after {
+  animation: rainbowSparkle 0.35s ease-out;
+}
+
+@keyframes rainbowSparkle {
+  0% {
+    transform: translateY(2px) scale(1);
+    opacity: 0.22;
+    filter: saturate(1.2) brightness(1);
+  }
+  40% {
+    transform: translateY(2px) scale(1.08);
+    opacity: 0.55;
+    filter: saturate(1.6) brightness(1.35);
+  }
+  100% {
+    transform: translateY(2px) scale(1);
+    opacity: 0.22;
+    filter: saturate(1.2) brightness(1);
+  }
+}
+
+/* ===== 盤面（アイボリー） ===== */
+.board-wrap {
+  position: relative;
+  flex: 1;
+  border-radius: var(--r);
+  background: #f6f4ee;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+  padding: 12px;
+  overflow: hidden;
+}
+
+.board {
+  height: 100%;
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* 絵文字ボタン（散らし配置） */
+.emoji-btn {
+  position: absolute;
+  width: var(--tileSize);
+  height: var(--tileSize);
+  border-radius: 18px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+
+  display: grid;
+  place-items: center;
+  font-size: calc(var(--tileSize) * 0.62);
+  cursor: pointer;
+
+  transition: transform 0.06s ease, opacity 0.12s ease, filter 0.12s ease;
+}
+
+.emoji-btn:active {
+  transform: scale(0.95);
+}
+
+.emoji-btn.disabled {
+  opacity: 0.25;
+  filter: grayscale(0.3);
+  pointer-events: none;
+}
+.emoji-btn:not(.disabled) {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+body.rainbow .emoji-btn {
+  animation: sparkleFloat 3.2s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.03);
+    filter: brightness(1.15);
+  }
+}
+
+/* ===== トースト ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 12px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+  max-width: min(560px, calc(100vw - 24px));
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* ===== 画面フラッシュ（任意） ===== */
+body.flash::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  animation: flash 0.18s ease-out;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

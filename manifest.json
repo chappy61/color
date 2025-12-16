@@ -1,0 +1,10 @@
+{
+  "name": "いろえもじ",
+  "short_name": "いろえもじ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f1a",
+  "theme_color": "#0b0f1a",
+  "description": "色をえらぶ絵文字ゲーム（8色4択＋虹ステージ）",
+  "icons": []
+}
