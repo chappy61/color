@@ -31,10 +31,10 @@ const COLORS = [
   { id:"blue",   hex:"#0a84ff", emojis:["🐳","🐬","🌍","🚙"] },
   { id:"yellow", hex:"#ffd60a", emojis:["🐝","🌻","🍋","🧀"] },
   { id:"green",  hex:"#34c759", emojis:["🦖","🥦","🥝","🐸"] },
-  { id:"purple", hex:"#af52de", emojis:["🍇","🍆","🪻","🫐"] },
+  { id:"purple", hex:"#782aa0ff", emojis:["🍇","🍆","🪻","🫐"] },
   { id:"orange", hex:"#ff9f0a", emojis:["🍊","🦊","🎃","🥕"] },
-  { id:"pink",   hex:"#ff2d55", emojis:["🌸","🎀","🍧","🦩"] },
-  { id:"brown",  hex:"#8D6E63", emojis:["🐿","🌰","🧸","🍔"] },
+  { id:"pink",   hex:"#ff617eff", emojis:["🌸","🎀","🍧","🦩"] },
+  { id:"brown",  hex:"#70331cff", emojis:["🐿","🌰","🧸","🍔"] },
 ];
 
 const el = {
