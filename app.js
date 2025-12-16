@@ -25,7 +25,6 @@ function getMaxTilesByScreen() {
   return 32;
 }
 
-// 色定義（みや版）
 const COLORS = [
   { id:"red",    hex:"#ff3b30", emojis:["🍎","🍓","📮","🌹"] },
   { id:"blue",   hex:"#0a84ff", emojis:["🐳","🐬","🌍","🚙"] },
@@ -33,7 +32,7 @@ const COLORS = [
   { id:"green",  hex:"#34c759", emojis:["🦖","🥦","🥝","🐸"] },
   { id:"purple", hex:"#782aa0ff", emojis:["🍇","🍆","🪻","🫐"] },
   { id:"orange", hex:"#ff9f0a", emojis:["🍊","🦊","🎃","🥕"] },
-  { id:"pink",   hex:"#ff617eff", emojis:["🌸","🎀","🍧","🦩"] },
+  { id:"pink",   hex:"#ff97aaff", emojis:["🌸","🎀","🍧","🦩"] },
   { id:"brown",  hex:"#70331cff", emojis:["🐿","🌰","🧸","🍔"] },
 ];
 
