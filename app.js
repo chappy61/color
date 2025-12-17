@@ -30,10 +30,10 @@ const COLORS = [
   { id:"blue",   hex:"#0a84ff", emojis:["🐳","🐬","🌍","🚙"] },
   { id:"yellow", hex:"#ffd60a", emojis:["🐝","🌻","🍋","🧀"] },
   { id:"green",  hex:"#34c759", emojis:["🦖","🥦","🥝","🐸"] },
-  { id:"purple", hex:"#782aa0ff", emojis:["🍇","🍆","🪻","🫐"] },
-  { id:"orange", hex:"#ff9f0a", emojis:["🍊","🦊","🎃","🥕"] },
+  { id:"purple", hex:"#782aa0ff", emojis:["🍇","🍆","💜","☂️"] },
+  { id:"orange", hex:"#ff6a00", emojis:["🍊","🦊","🎃","🥕"] },
   { id:"pink",   hex:"#ff97aaff", emojis:["🌸","🎀","🍧","🦩"] },
-  { id:"brown",  hex:"#70331cff", emojis:["🐿","🌰","🧸","🍔"] },
+  { id:"brown",  hex:"#70331cff", emojis:["🐿","🌰","🧸","🥔"] },
 ];
 
 const el = {
@@ -316,7 +316,6 @@ function onTilePointerDown(e){
     sparkleSlots(); 
     playFileSound("rainbow");   // ★追加
     fillNextSlot("🌈");
-    toast("🌈！");
     window.setTimeout(()=> restartGame(), 900);
     return;
   }
@@ -368,7 +367,6 @@ function startRainbowStage(){
   resetSlots(); // 後で “虹ステージはスロット非表示” にするので、この行は残してOK
   document.body.classList.add("rainbow");
   renderBoard();
-  toast("🌈をさがして！");
 
 }
 

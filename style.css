@@ -95,7 +95,7 @@ body.rainbow {
   flex: 1;
   display: flex;
   gap: 12px;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .slot {
@@ -106,8 +106,10 @@ body.rainbow {
   border: 2px solid rgba(255, 255, 255, 0.3);
   display: grid;
   place-items: center;
-  font-size: clamp(22px, 4.2vw, 40px);
+  font-size: clamp(16px, 3.2vw, 26px);
   filter: saturate(1.05);
+  max-width: 56px;
+  margin: 0 auto;
 }
 
 /* スロットのポン演出 */
@@ -174,7 +176,6 @@ body.rainbow #slots .slot {
 }
 
 body.rainbow #slots::after {
-  content: "🌈";
   position: absolute;
   inset: 0;
   display: grid;
@@ -184,10 +185,6 @@ body.rainbow #slots::after {
   pointer-events: none;
   transform: translateY(2px);
   filter: saturate(1.2);
-}
-/* 虹ステージの🌈をキラッとさせる用 */
-body.rainbow #slots.sparkle::after {
-  animation: rainbowSparkle 0.35s ease-out;
 }
 
 @keyframes rainbowSparkle {
